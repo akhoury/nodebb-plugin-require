@@ -9,7 +9,7 @@ Easily require NodeBB/src modules from within any plugin when running that as a 
 var nodebbRequire = require('nodebb-plugin-require');
 
 // to require the /path/to/NodeBB/src/user
-var User = nodebbRequire('/src/user');
+var File = nodebbRequire('/src/file');
 
 // you can also print out the full filepath
 console.log(nodebbRequire.fullpath);

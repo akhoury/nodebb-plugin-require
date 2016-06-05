@@ -1,0 +1,23 @@
+{
+  "name": "nodebb-plugin-require",
+  "version": "0.0.1",
+  "description": "Easily require NodeBB/src modules from within any plugin when running that as a stand-alone script",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akhoury/nodebb-plugin-require.git"
+  },
+  "author": "https://github.com/akhoury",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akhoury/nodebb-plugin-require/issues"
+  },
+  "nbbpm": {
+    "compatibility": "*",
+    "index": false
+  },
+  "homepage": "https://github.com/akhoury/nodebb-plugin-require#readme"
+}

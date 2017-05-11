@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-require",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Easily require NodeBB/src modules from within any plugin when running that as a stand-alone script",
   "main": "index.js",
   "scripts": {

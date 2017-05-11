@@ -20,7 +20,9 @@ var findPackageDirectory = function (name, dir) {
 		parts.pop();
 		dir = parts.join(path.sep);
 	}
-	throw new Error("Cannot find " + name + " installation path, are you sure you installed this module somewhere under /path/to/" + name + "/node_modules?");
+	throw new Error("Cannot find " + name 
+			+ " installation path, are you sure you installed this module somewhere under /path/to/" + name 
+			+ "/node_modules or at least it's symlinked in there? if you're using __dirname, try `process.env.PWD` instead, works with symlinks");
 };
 
 
@@ -32,7 +34,7 @@ var findNodebbDirectory = function (startDir) {
 	return findPackageDirectory("nodebb", startDir);
 };
 
-var fullpath = findNodebbDirectory(__dirname);
+var fullpath = findNodebbDirectory(process.env.PWD);
 
 var nodebbRequire = function (relative) {
 	return require(path.join(fullpath, relative));

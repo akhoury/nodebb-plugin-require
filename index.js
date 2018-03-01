@@ -21,8 +21,13 @@ var findPackageDirectory = function (name, dir) {
 		dir = parts.join(path.sep);
 	}
 
+
+	var oparts = odir.split(path.sep);
+	oparts.pop();
+	var pdir = oparts.join(path.sep);
+
 	// no luck? try sibling directories
-    var siblings = getSiblingDirectories(dir);
+	var siblings = getSiblingDirectories(pdir).concat(getSiblingDirectories(odir));
 	var pkgdir;
 	siblings.some(function (dir) {
 		if (isPackageDirectory(name, dir)) {

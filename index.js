@@ -12,6 +12,7 @@ var isPackageDirectory = function (name, dir) {
 };
 
 var findPackageDirectory = function (name, dir) {
+	var odir = dir;
 	while (dir) {
 		if (isPackageDirectory(name, dir)) {
 			return dir;
@@ -41,7 +42,7 @@ var findPackageDirectory = function (name, dir) {
 	}
 
 	throw new Error("Cannot find " + name
-			+ " installation path, are you sure you installed this module somewhere under /path/to/" + name 
+			+ " installation path, are you sure you installed this module somewhere under /path/to/" + name
 			+ "/node_modules or at least it's symlinked in there? if you're using __dirname, try `process.env.PWD` instead, works with symlinks");
 };
 
@@ -65,16 +66,18 @@ var findNodebbDirectory = function (startDir) {
 };
 
 var fullpath = findNodebbDirectory(process.env.PWD);
+// this would work too, but costs 1 more iteration
+// var fullpath = findNodebbDirectory(require.main.filename);
 
 var nodebbRequire = function (relative) {
 	var m;
 	try {
-        m = require(path.join(fullpath, relative));
+		m = require(path.join(fullpath, relative));
 	} catch (e1) {
 		try {
             m = require(path.join(fullpath, 'node_modules', relative))
 		} catch (e2) {
-			throw new Error(e1.message + '\n&\n' + e2.message);
+			throw new Error('2 Errors:\n' + '\t* ' + e1.message + '\n\t* ' + e2.message);
 		}
 	}
 	return m;

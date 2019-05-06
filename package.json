@@ -1,10 +1,10 @@
 {
   "name": "nodebb-plugin-require",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Easily require NodeBB/src modules from within any plugin when running that as a stand-alone script",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/index"
   },
   "repository": {
     "type": "git",

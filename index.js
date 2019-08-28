@@ -12,6 +12,7 @@ var isPackageDirectory = function (name, dir) {
 };
 
 var findPackageDirectory = function (name, dir) {
+	var odir = dir;
 	while (dir) {
 		if (isPackageDirectory(name, dir)) {
 			return dir;
@@ -20,14 +21,15 @@ var findPackageDirectory = function (name, dir) {
 		parts.pop();
 		dir = parts.join(path.sep);
 	}
+	dir = odir;
 
 
-	var oparts = odir.split(path.sep);
+	var oparts = dir.split(path.sep);
 	oparts.pop();
 	var pdir = oparts.join(path.sep);
 
 	// no luck? try sibling directories
-	var siblings = getSiblingDirectories(pdir).concat(getSiblingDirectories(odir));
+	var siblings = getSiblingDirectories(pdir).concat(getSiblingDirectories(dir));
 	var pkgdir;
 	siblings.some(function (dir) {
 		if (isPackageDirectory(name, dir)) {
@@ -41,7 +43,7 @@ var findPackageDirectory = function (name, dir) {
 	}
 
 	throw new Error("Cannot find " + name
-			+ " installation path, are you sure you installed this module somewhere under /path/to/" + name 
+			+ " installation path, are you sure you installed this module somewhere under /path/to/" + name
 			+ "/node_modules or at least it's symlinked in there? if you're using __dirname, try `process.env.PWD` instead, works with symlinks");
 };
 
@@ -63,6 +65,10 @@ var isNodebbDirectory = function (dir) {
 var findNodebbDirectory = function (startDir) {
 	return findPackageDirectory("nodebb", startDir);
 };
+
+if (!process.env.PWD) {
+	process.env.PWD = process.cwd();
+}
 
 var fullpath = findNodebbDirectory(process.env.PWD);
 

@@ -12,39 +12,29 @@ var isPackageDirectory = function (name, dir) {
 };
 
 var findPackageDirectory = function (name, dir) {
-	var odir = dir;
 	while (dir) {
 		if (isPackageDirectory(name, dir)) {
 			return dir;
+		}
+		var siblings = getSiblingDirectories(dir);
+		var pkgdir;
+		siblings.some(function (sibling) {
+			if (isPackageDirectory(name, sibling)) {
+				pkgdir = sibling;
+				return true;
+			}
+			return false;
+		});
+		if (pkgdir) {
+			return pkgdir;
 		}
 		var parts = dir.split(path.sep);
 		parts.pop();
 		dir = parts.join(path.sep);
 	}
-	dir = odir;
-
-
-	var oparts = dir.split(path.sep);
-	oparts.pop();
-	var pdir = oparts.join(path.sep);
-
-	// no luck? try sibling directories
-	var siblings = getSiblingDirectories(pdir).concat(getSiblingDirectories(dir));
-	var pkgdir;
-	siblings.some(function (dir) {
-		if (isPackageDirectory(name, dir)) {
-			pkgdir = dir;
-			return true;
-		}
-		return false;
-	});
-	if (pkgdir) {
-		return pkgdir;
-	}
-
 	throw new Error("Cannot find " + name
 			+ " installation path, are you sure you installed this module somewhere under /path/to/" + name
-			+ "/node_modules or at least it's symlinked in there? if you're using __dirname, try `process.env.PWD` instead, works with symlinks");
+			+ "/node_modules or at least it's symlinked in there? if you're using __dirname, try `process.env.PWD` or `process.cwd()` instead, works with symlinks");
 };
 
 var isDirectory = function (source) {
